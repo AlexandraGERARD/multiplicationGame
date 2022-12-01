@@ -1,6 +1,7 @@
-import * as React from "react";
-import ApiClient from "../services/ApiClient";
-import LastAttemptsComponent from "./LastAttemptsComponent";
+import * as React from 'react';
+import ChallengesApiClient from '../services/ChallengesApiClient';
+import LastAttemptsComponent from './LastAttemptsComponent';
+import LeaderBoardComponent from './LeaderBoardComponent';
 
 class ChallengeComponent extends React.Component {
     constructor(props) {
@@ -18,7 +19,7 @@ class ChallengeComponent extends React.Component {
     }
 
     componentDidMount(): void {
-        ApiClient.challenge().then(
+        ChallengesApiClient.challenge().then(
             res => {
                 if (res.ok) {
                     res.json().then(json => {
@@ -43,7 +44,7 @@ class ChallengeComponent extends React.Component {
 
     handleSubmitResult(event) {
         event.preventDefault();
-        ApiClient.sendGuess(this.state.user, this.state.a, this.state.b, this.state.guess)
+        ChallengesApiClient.sendGuess(this.state.user, this.state.a, this.state.b, this.state.guess)
             .then(res => {
                 if (res.ok) {
                     res.json().then(json => {
@@ -67,7 +68,7 @@ class ChallengeComponent extends React.Component {
     }
 
     updateLastAttempts(userAlias: string) {
-        ApiClient.getAttempts(userAlias).then(res => {
+        ChallengesApiClient.getAttempts(userAlias).then(res => {
             if (res.ok) {
                 let attempts: Attempt[] = [];
                 res.json().then(data => {
@@ -116,6 +117,8 @@ class ChallengeComponent extends React.Component {
                 </form>
                 <h4>{this.state.message}</h4>
                 {this.state.lastAttempts.length > 0 && <LastAttemptsComponent lastAttempts={this.state.lastAttempts}/>}
+
+                <LeaderBoardComponent/>
             </div>
         );
     }
