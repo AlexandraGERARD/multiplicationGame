@@ -51,6 +51,12 @@
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-hibernate5</artifactId>
         </dependency>
+        <dependency>
+            <groupId>microservices.book</groupId>
+            <artifactId>gamification</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
     <build>
