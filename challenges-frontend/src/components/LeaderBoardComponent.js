@@ -75,31 +75,31 @@ class LeaderBoardComponent extends React.Component {
     }
 
     render() {
-        if (this.state.serverError) {
+        if(this.state.serverError) {
             return (
-                <div>We're sorry, but we can't display game statistics at this
-                    moment.</div>
+                <div>We're sorry, but we can't display game statistics at this moment.</div>
             );
         }
+
         return (
             <div>
-                <h3>Leaderboard</h3>
+                <h3>LeaderBoard</h3>
                 <table>
                     <thead>
-                    <tr>
-                        <th>User</th>
-                        <th>Score</th>
-                        <th>Badges</th>
-                    </tr>
+                        <tr>
+                            <th>User</th>
+                            <th>Score</th>
+                            <th>Badges</th>
+                        </tr>
                     </thead>
                     <tbody>
-                    {this.state.leaderboard.map(row => <tr key={row.userId}>
-                        <td>{row.alias ? row.alias : row.userId}</td>
-                        <td>{row.totalScore}</td>
-                        <td>{row.badges.map(
-                            b => <span className="badge" key={b}>{b}</span>)}
-                        </td>
-                    </tr>)}
+                        {this.state.leaderboard.map(row => <tr key={row.userId}>
+                            <td>{row.alias ? row.alias : row.userId}</td>
+                            <td>{row.totalScore}</td>
+                            <td>{row.badges.map(
+                                b => <span className="badge" key={b}>{b}</span>)}
+                            </td>
+                        </tr>)}
                     </tbody>
                 </table>
             </div>

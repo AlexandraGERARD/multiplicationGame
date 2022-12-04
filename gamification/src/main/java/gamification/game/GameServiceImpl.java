@@ -45,19 +45,23 @@ public class GameServiceImpl implements GameService {
     private List<BadgeCard> processForBadges(final ChallengeSolvedDTO solvedChallenge) {
         Optional<Integer> optTotalScore = scoreRepository.getTotalScoreForUser(solvedChallenge.getUserId());
 
-        if (optTotalScore.isEmpty()) {
+        if (optTotalScore.isEmpty()){
             return Collections.emptyList();
         }
 
         int totalScore = optTotalScore.get();
+
         List<ScoreCard> scoreCardList =
                 scoreRepository.findByUserIdOrderByScoreTimestampDesc(solvedChallenge.getUserId());
         Set<BadgeType> alreadyGotBadges =
                 badgeRepository.findByUserIdOrderByBadgeTimestampDesc(solvedChallenge.getUserId()).stream().map(BadgeCard::getBadgeType).collect(Collectors.toSet());
 
         List<BadgeCard> newBadgeCards =
-                badgeProcessors.stream().filter(bp -> !alreadyGotBadges.contains(bp.badgeType())).map(bp -> bp.processForOptionalBadge(totalScore, scoreCardList, solvedChallenge)).flatMap(Optional::stream).map(badgeType -> new BadgeCard(solvedChallenge.getUserId(), badgeType)).collect(Collectors.toList());
+                badgeProcessors.stream().filter(bp -> !alreadyGotBadges.contains(bp.badgeType())).map(bp -> bp.processForOptionalBadge(totalScore, scoreCardList, solvedChallenge)).flatMap(Optional::stream) // returns an empty stream if empty
+                .map(badgeType -> new BadgeCard(solvedChallenge.getUserId(), badgeType)).collect(Collectors.toList());
+
         badgeRepository.saveAll(newBadgeCards);
+
         return newBadgeCards;
     }
 }

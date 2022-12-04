@@ -6,14 +6,16 @@ class ChallengesApiClient {
     static GET_USERS_BY_IDS = '/users';
 
     static challenge(): Promise<Response> {
-        return fetch(ChallengesApiClient.SERVER_URL + ChallengesApiClient.GET_CHALLENGE);
+        return fetch(ChallengesApiClient.SERVER_URL +
+            ChallengesApiClient.GET_CHALLENGE);
     }
 
     static sendGuess(user: string,
                      a: number,
                      b: number,
                      guess: number): Promise<Response> {
-        return fetch(ChallengesApiClient.SERVER_URL + ChallengesApiClient.POST_RESULT,
+        return fetch(ChallengesApiClient.SERVER_URL +
+            ChallengesApiClient.POST_RESULT,
             {
                 method: 'POST',
                 headers: {
@@ -27,16 +29,18 @@ class ChallengesApiClient {
                         guess: guess
                     }
                 )
-            }
-        );
+            });
     }
 
     static getAttempts(userAlias: string): Promise<Response> {
-        return fetch(ChallengesApiClient.SERVER_URL + ChallengesApiClient.GET_ATTEMPTS_BY_ALIAS + userAlias);
+        return fetch(ChallengesApiClient.SERVER_URL +
+            ChallengesApiClient.GET_ATTEMPTS_BY_ALIAS + userAlias);
     }
 
     static getUsers(userIds: number[]): Promise<Response> {
-        return fetch(ChallengesApiClient.SERVER_URL + ChallengesApiClient.GET_USERS_BY_IDS + '/' + userIds.join(','));
+        return fetch(ChallengesApiClient.SERVER_URL +
+            ChallengesApiClient.GET_USERS_BY_IDS +
+            '/' + userIds.join(','));
     }
 }
 
